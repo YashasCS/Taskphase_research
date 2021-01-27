@@ -1,0 +1,122 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F47J53 ]
+[d frameptr 4065 ]
+"4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"15 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\Umul64.c
+[v ___omul __omul `(uo  1 e 8 0 ]
+"6 C:\Users\HP\MPLABXProjects\UART_SIMULATION.X\UART_SIMULATION.c
+[v _USART_Init USART_Init `(v  1 e 1 0 ]
+"19
+[v _USART_TxChar USART_TxChar `(v  1 e 1 0 ]
+"38
+[v _main main `(v  1 e 1 0 ]
+[s S24 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 . 1 0 :3:3 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"11258 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC18F-J_DFP/1.3.35/xc8\pic\include\proc\pic18f47j53.h
+[u S31 . 1 `S24 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES31  1 e 1 @3988 ]
+"12981
+[v _RCSTA RCSTA `VEuc  1 e 1 @4012 ]
+[s S47 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"13031
+[s S56 . 1 `uc 1 RCD8 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 ADEN 1 0 :1:3 
+`uc 1 . 1 0 :2:4 
+`uc 1 RC9 1 0 :1:6 
+]
+[s S62 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 NOT_RC8 1 0 :1:6 
+]
+[s S65 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 nRC8 1 0 :1:6 
+]
+[s S68 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC8_9 1 0 :1:6 
+]
+[s S71 . 1 `uc 1 RX9D1 1 0 :1:0 
+`uc 1 OERR1 1 0 :1:1 
+`uc 1 FERR1 1 0 :1:2 
+`uc 1 ADDEN1 1 0 :1:3 
+`uc 1 CREN1 1 0 :1:4 
+`uc 1 SREN1 1 0 :1:5 
+`uc 1 RX91 1 0 :1:6 
+`uc 1 SPEN1 1 0 :1:7 
+]
+[s S80 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[u S83 . 1 `S47 1 . 1 0 `S56 1 . 1 0 `S62 1 . 1 0 `S65 1 . 1 0 `S68 1 . 1 0 `S71 1 . 1 0 `S80 1 . 1 0 ]
+[v _RCSTA1bits RCSTA1bits `VES83  1 e 1 @4012 ]
+"13194
+[v _RCSTAbits RCSTAbits `VES83  1 e 1 @4012 ]
+"13319
+[v _TXSTA TXSTA `VEuc  1 e 1 @4013 ]
+"13607
+[v _TXREG TXREG `VEuc  1 e 1 @4014 ]
+"13645
+[v _RCREG RCREG `VEuc  1 e 1 @4015 ]
+"13683
+[v _SPBRG SPBRG `VEuc  1 e 1 @4016 ]
+"22384
+[v _RCIF RCIF `VEb  1 e 0 @31989 ]
+"23566
+[v _TXIF TXIF `VEb  1 e 0 @31988 ]
+"38 C:\Users\HP\MPLABXProjects\UART_SIMULATION.X\UART_SIMULATION.c
+[v _main main `(v  1 e 1 0 ]
+{
+"42
+[v main@rc_data rc_data `[100]uc  1 a 100 0 ]
+"43
+[v main@i i `ui  1 a 2 100 ]
+"61
+} 0
+"19
+[v _USART_TxChar USART_TxChar `(v  1 e 1 0 ]
+{
+[v USART_TxChar@out out `uc  1 a 1 wreg ]
+[v USART_TxChar@out out `uc  1 a 1 wreg ]
+[v USART_TxChar@out out `uc  1 a 1 0 ]
+"23
+} 0
+"6
+[v _USART_Init USART_Init `(v  1 e 1 0 ]
+{
+"18
+} 0

@@ -11569,15 +11569,15 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 
 
 
-void USART_Init(long baud_rate)
+void USART_Init()
 {
-    float temp;
-    TRISC6=0;
-    TRISC7=1;
+
+    TRISCbits.TRISC6=0;
+    TRISCbits.TRISC7=1;
 
 
-    temp= (( (float) (20000000/64) / (float) baud_rate ) - 1);
-    SPBRG = (unsigned char) temp;
+
+    SPBRG = 32;
 
     TXSTA = 0x20;
     RCSTA = 0x90;
@@ -11590,50 +11590,38 @@ void USART_TxChar(char out)
 char USART_RxChar()
 {
 
-while(RCIF==0);
+while(RCIF==0)
+    ;
     if(RCSTAbits.OERR)
     {
-        CREN = 0;
+        RCSTA1bits.CREN = 0;
         __nop();
-        CREN=1;
+        RCSTA1bits.CREN=1;
     }
     return(RCREG);
 }
-void receive_string()
+
+void main()
 {
-char rc_data[10];
+
+char out;
+char rc_data[100];
 unsigned int i;
+USART_Init();
 
 for(i=0;;i++)
 {
-while(!RCIF);
-rc_data[i]=RCREG;
-if(rc_data[i]=='\r')
-{
-rc_data[i]='\0';
-break;
-}
-}
-}
-
-void main(){
-    while(1)
+    while(!RCIF);
+    rc_data[i]=RCREG;
+    if(rc_data[i]=='\r')
     {
-      char get_value = USART_RxChar();
-
-        if (get_value == '1')
-        {
-
-
-            USART_RxChar(10);
-        }
-
-        if (get_value == '0')
-        {
-
-
-           USART_TxChar(10);
-        }
+        rc_data[i]='\0';
+        break;
     }
+}
+for(i=0;i<100;i++)
+{
+    USART_TxChar(rc_data[i]);
+}
 
 }

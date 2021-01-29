@@ -1,0 +1,909 @@
+
+
+Microchip MPLAB XC8 Assembler V2.31 build 20201012212115 
+                                                                                               Fri Jan 29 23:39:08 2021
+
+Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1 
+     1                           	processor	18F47J53
+     2                           	fnconf	rparam,??,?,0
+     3                           	pagewidth 120
+     4                           	opt	flic
+     5                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     6                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     7                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     8                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     9                           	psect	text0,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    12                           	psect	intcode,global,reloc=2,class=CODE,delta=1
+    13                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    14                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    15                           	psect	temp,global,ovrld,common,class=COMRAM,space=1,delta=1
+    16                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=1,noexec
+    17  0000                     
+    18                           ; Version 2.20
+    19                           ; Generated 29/04/2020 GMT
+    20                           ; 
+    21                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    22                           ; All rights reserved.
+    23                           ; 
+    24                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    25                           ; 
+    26                           ; Redistribution and use in source and binary forms, with or without modification, are
+    27                           ; permitted provided that the following conditions are met:
+    28                           ; 
+    29                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    30                           ;        conditions and the following disclaimer.
+    31                           ; 
+    32                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    33                           ;        of conditions and the following disclaimer in the documentation and/or other
+    34                           ;        materials provided with the distribution.
+    35                           ; 
+    36                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    37                           ;        software without specific prior written permission.
+    38                           ; 
+    39                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    40                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    41                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    42                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    43                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    44                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    45                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    46                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    47                           ; 
+    48                           ; 
+    49                           ; Code-generator required, PIC18F47J53 Definitions
+    50                           ; 
+    51                           ; SFR Addresses
+    52  0000                     _INTCONbits	set	4082
+    53  0000                     _TXSTAbits	set	4013
+    54  0000                     _RCREG	set	4015
+    55  0000                     _TXREG	set	4014
+    56  0000                     _PIR1bits	set	3998
+    57  0000                     _PIE1bits	set	3997
+    58  0000                     _RCSTA	set	4012
+    59  0000                     _TXSTA	set	4013
+    60  0000                     _SPBRG	set	4016
+    61  0000                     _TRISCbits	set	3988
+    62                           
+    63                           ; #config settings
+    64                           
+    65                           	psect	cinit
+    66  000116                     __pcinit:
+    67                           	callstack 0
+    68  000116                     start_initialization:
+    69                           	callstack 0
+    70  000116                     __initialization:
+    71                           	callstack 0
+    72                           
+    73                           ; Clear objects allocated to COMRAM (2 bytes)
+    74  000116  6A06               	clrf	(__pbssCOMRAM+1)& (0+255),c
+    75  000118  6A05               	clrf	__pbssCOMRAM& (0+255),c
+    76  00011A                     end_of_initialization:
+    77                           	callstack 0
+    78  00011A                     __end_of__initialization:
+    79                           	callstack 0
+    80  00011A  9007               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+    81  00011C  9207               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+    82  00011E  0100               	movlb	0
+    83  000120  EF20  F000         	goto	_main	;jump to C main() function
+    84                           
+    85                           	psect	bssCOMRAM
+    86  000005                     __pbssCOMRAM:
+    87                           	callstack 0
+    88  000005                     _str:
+    89                           	callstack 0
+    90  000005                     	ds	2
+    91                           
+    92                           	psect	cstackBANK0
+    93  000060                     __pcstackBANK0:
+    94                           	callstack 0
+    95  000060                     main@rc_data:
+    96                           	callstack 0
+    97                           
+    98                           ; 100 bytes @ 0x0
+    99  000060                     	ds	100
+   100  0000C4                     main@i:
+   101                           	callstack 0
+   102                           
+   103                           ; 2 bytes @ 0x64
+   104  0000C4                     	ds	2
+   105                           
+   106                           	psect	cstackCOMRAM
+   107  000001                     __pcstackCOMRAM:
+   108                           	callstack 0
+   109  000001                     ??_ISR:
+   110  000001                     
+   111                           ; 1 bytes @ 0x0
+   112  000001                     	ds	2
+   113  000003                     tx_char@a:
+   114                           	callstack 0
+   115                           
+   116                           ; 1 bytes @ 0x2
+   117  000003                     	ds	1
+   118  000004                     
+   119                           ; 1 bytes @ 0x3
+   120  000004                     	ds	1
+   121                           
+   122 ;;
+   123 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   124 ;;
+   125 ;; *************** function _main *****************
+   126 ;; Defined at:
+   127 ;;		line 53 in file "UART_SIMULATION.c"
+   128 ;; Parameters:    Size  Location     Type
+   129 ;;		None
+   130 ;; Auto vars:     Size  Location     Type
+   131 ;;  rc_data       100    0[BANK0 ] unsigned char [100]
+   132 ;;  i               2  100[BANK0 ] unsigned int 
+   133 ;;  out             1    0        unsigned char 
+   134 ;; Return value:  Size  Location     Type
+   135 ;;                  1    wreg      void 
+   136 ;; Registers used:
+   137 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+   138 ;; Tracked objects:
+   139 ;;		On entry : 0/0
+   140 ;;		On exit  : 0/0
+   141 ;;		Unchanged: 0/0
+   142 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14
+   143 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   144 ;;      Locals:         0     102       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   145 ;;      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   146 ;;      Totals:         1     102       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   147 ;;Total ram usage:      103 bytes
+   148 ;; Hardware stack levels required when called:    2
+   149 ;; This function calls:
+   150 ;;		_USART_Init
+   151 ;;		_tx_char
+   152 ;; This function is called by:
+   153 ;;		Startup code after reset
+   154 ;; This function uses a non-reentrant model
+   155 ;;
+   156                           
+   157                           	psect	text0
+   158  000040                     __ptext0:
+   159                           	callstack 0
+   160  000040                     _main:
+   161                           	callstack 29
+   162  000040                     
+   163                           ;UART_SIMULATION.c: 55:     INTCONbits.GIE=1;
+   164  000040  8EF2               	bsf	242,7,c	;volatile
+   165                           
+   166                           ;UART_SIMULATION.c: 56:     INTCONbits.PEIE=1;
+   167  000042  8CF2               	bsf	242,6,c	;volatile
+   168                           
+   169                           ;UART_SIMULATION.c: 57:     PIR1bits.RCIF=0;
+   170  000044  9A9E               	bcf	158,5,c	;volatile
+   171                           
+   172                           ;UART_SIMULATION.c: 58:     PIE1bits.RCIE=1;
+   173  000046  8A9D               	bsf	157,5,c	;volatile
+   174  000048                     l799:
+   175                           
+   176                           ;UART_SIMULATION.c: 60:         char out;;UART_SIMULATION.c: 61:         char rc_data[10
+      +                          0];;UART_SIMULATION.c: 62:         unsigned int i;;UART_SIMULATION.c: 63:         USART_
+      +                          Init();
+   177  000048  EC82  F000         	call	_USART_Init	;wreg free
+   178  00004C                     
+   179                           ;UART_SIMULATION.c: 64:         for(i=0;;i++)
+   180  00004C  0E00               	movlw	0
+   181  00004E  0100               	movlb	0	; () banked
+   182  000050  6FC5               	movwf	(main@i+1)& (0+255),b
+   183  000052  0E00               	movlw	0
+   184  000054  6FC4               	movwf	main@i& (0+255),b
+   185  000056                     l56:
+   186  000056  AA9E               	btfss	158,5,c	;volatile
+   187  000058  EF30  F000         	goto	u91
+   188  00005C  EF32  F000         	goto	u90
+   189  000060                     u91:
+   190  000060  EF2B  F000         	goto	l56
+   191  000064                     u90:
+   192  000064                     
+   193                           ;UART_SIMULATION.c: 67:             rc_data[i]=RCREG;
+   194  000064  0E60               	movlw	low main@rc_data
+   195  000066  0100               	movlb	0	; () banked
+   196  000068  25C4               	addwf	main@i& (0+255),w,b
+   197  00006A  6ED9               	movwf	fsr2l,c
+   198  00006C  0E00               	movlw	high main@rc_data
+   199  00006E  21C5               	addwfc	(main@i+1)& (0+255),w,b
+   200  000070  6EDA               	movwf	fsr2h,c
+   201  000072  CFAF FFDF          	movff	4015,indf2	;volatile
+   202                           
+   203                           ;UART_SIMULATION.c: 68:             if(rc_data[i]=='\r')
+   204  000076  0E60               	movlw	low main@rc_data
+   205  000078  25C4               	addwf	main@i& (0+255),w,b
+   206  00007A  6ED9               	movwf	fsr2l,c
+   207  00007C  0E00               	movlw	high main@rc_data
+   208  00007E  21C5               	addwfc	(main@i+1)& (0+255),w,b
+   209  000080  6EDA               	movwf	fsr2h,c
+   210  000082  0E0D               	movlw	13
+   211  000084  18DE               	xorwf	postinc2,w,c
+   212  000086  A4D8               	btfss	status,2,c
+   213  000088  EF48  F000         	goto	u101
+   214  00008C  EF4A  F000         	goto	u100
+   215  000090                     u101:
+   216  000090  EF54  F000         	goto	l807
+   217  000094                     u100:
+   218  000094                     
+   219                           ; BSR set to: 0
+   220                           ;UART_SIMULATION.c: 69:             {;UART_SIMULATION.c: 70:                 rc_data[i]=
+      +                          '\0';
+   221  000094  0E60               	movlw	low main@rc_data
+   222  000096  25C4               	addwf	main@i& (0+255),w,b
+   223  000098  6ED9               	movwf	fsr2l,c
+   224  00009A  0E00               	movlw	high main@rc_data
+   225  00009C  21C5               	addwfc	(main@i+1)& (0+255),w,b
+   226  00009E  6EDA               	movwf	fsr2h,c
+   227  0000A0  0E00               	movlw	0
+   228  0000A2  6EDF               	movwf	indf2,c
+   229                           
+   230                           ;UART_SIMULATION.c: 71:                 break;
+   231  0000A4  EF58  F000         	goto	l809
+   232  0000A8                     l807:
+   233                           
+   234                           ; BSR set to: 0
+   235                           ;UART_SIMULATION.c: 73:         }
+   236  0000A8  4BC4               	infsnz	main@i& (0+255),f,b
+   237  0000AA  2BC5               	incf	(main@i+1)& (0+255),f,b
+   238  0000AC  EF2B  F000         	goto	l56
+   239  0000B0                     l809:
+   240                           
+   241                           ; BSR set to: 0
+   242                           ;UART_SIMULATION.c: 74:         for(i=0;i<100;i++)
+   243  0000B0  0E00               	movlw	0
+   244  0000B2  6FC5               	movwf	(main@i+1)& (0+255),b
+   245  0000B4  0E00               	movlw	0
+   246  0000B6  6FC4               	movwf	main@i& (0+255),b
+   247  0000B8                     l815:
+   248                           
+   249                           ; BSR set to: 0
+   250                           ;UART_SIMULATION.c: 75:         {;UART_SIMULATION.c: 76:             tx_char(rc_data[i])
+      +                          ;
+   251  0000B8  0E60               	movlw	low main@rc_data
+   252  0000BA  25C4               	addwf	main@i& (0+255),w,b
+   253  0000BC  6ED9               	movwf	fsr2l,c
+   254  0000BE  0E00               	movlw	high main@rc_data
+   255  0000C0  21C5               	addwfc	(main@i+1)& (0+255),w,b
+   256  0000C2  6EDA               	movwf	fsr2h,c
+   257  0000C4  50DF               	movf	indf2,w,c
+   258  0000C6  EC77  F000         	call	_tx_char
+   259  0000CA                     
+   260                           ;UART_SIMULATION.c: 77:         }
+   261  0000CA  0100               	movlb	0	; () banked
+   262  0000CC  4BC4               	infsnz	main@i& (0+255),f,b
+   263  0000CE  2BC5               	incf	(main@i+1)& (0+255),f,b
+   264  0000D0                     
+   265                           ; BSR set to: 0
+   266  0000D0  51C5               	movf	(main@i+1)& (0+255),w,b
+   267  0000D2  E109               	bnz	u110
+   268  0000D4  0E64               	movlw	100
+   269  0000D6  5DC4               	subwf	main@i& (0+255),w,b
+   270  0000D8  A0D8               	btfss	status,0,c
+   271  0000DA  EF71  F000         	goto	u111
+   272  0000DE  EF73  F000         	goto	u110
+   273  0000E2                     u111:
+   274  0000E2  EF5C  F000         	goto	l815
+   275  0000E6                     u110:
+   276  0000E6  EF24  F000         	goto	l799
+   277  0000EA  EF1E  F000         	goto	start
+   278  0000EE                     __end_of_main:
+   279                           	callstack 0
+   280                           
+   281 ;; *************** function _tx_char *****************
+   282 ;; Defined at:
+   283 ;;		line 47 in file "UART_SIMULATION.c"
+   284 ;; Parameters:    Size  Location     Type
+   285 ;;  a               1    wreg     unsigned char 
+   286 ;; Auto vars:     Size  Location     Type
+   287 ;;  a               1    2[COMRAM] unsigned char 
+   288 ;; Return value:  Size  Location     Type
+   289 ;;                  1    wreg      void 
+   290 ;; Registers used:
+   291 ;;		wreg
+   292 ;; Tracked objects:
+   293 ;;		On entry : 0/0
+   294 ;;		On exit  : 0/0
+   295 ;;		Unchanged: 0/0
+   296 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14
+   297 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   298 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   299 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   300 ;;      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   301 ;;Total ram usage:        1 bytes
+   302 ;; Hardware stack levels used:    1
+   303 ;; Hardware stack levels required when called:    1
+   304 ;; This function calls:
+   305 ;;		Nothing
+   306 ;; This function is called by:
+   307 ;;		_main
+   308 ;; This function uses a non-reentrant model
+   309 ;;
+   310                           
+   311                           	psect	text1
+   312  0000EE                     __ptext1:
+   313                           	callstack 0
+   314  0000EE                     _tx_char:
+   315                           	callstack 29
+   316                           
+   317                           ; BSR set to: 0
+   318                           ;incstack = 0
+   319                           ;tx_char@a stored from wreg
+   320  0000EE  6E03               	movwf	tx_char@a^0,c
+   321  0000F0                     
+   322                           ;UART_SIMULATION.c: 47: void tx_char(char a);UART_SIMULATION.c: 48: {;UART_SIMULATION.c:
+      +                           49:     TXREG=a;
+   323  0000F0  C003  FFAE         	movff	tx_char@a,4014	;volatile
+   324  0000F4                     l46:
+   325  0000F4  A2AD               	btfss	173,1,c	;volatile
+   326  0000F6  EF7F  F000         	goto	u81
+   327  0000FA  EF81  F000         	goto	u80
+   328  0000FE                     u81:
+   329  0000FE  EF7A  F000         	goto	l46
+   330  000102                     u80:
+   331  000102  0012               	return		;funcret
+   332  000104                     __end_of_tx_char:
+   333                           	callstack 0
+   334                           
+   335 ;; *************** function _USART_Init *****************
+   336 ;; Defined at:
+   337 ;;		line 6 in file "UART_SIMULATION.c"
+   338 ;; Parameters:    Size  Location     Type
+   339 ;;		None
+   340 ;; Auto vars:     Size  Location     Type
+   341 ;;		None
+   342 ;; Return value:  Size  Location     Type
+   343 ;;                  1    wreg      void 
+   344 ;; Registers used:
+   345 ;;		wreg, status,2
+   346 ;; Tracked objects:
+   347 ;;		On entry : 0/0
+   348 ;;		On exit  : 0/0
+   349 ;;		Unchanged: 0/0
+   350 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14
+   351 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   352 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   353 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   354 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   355 ;;Total ram usage:        0 bytes
+   356 ;; Hardware stack levels used:    1
+   357 ;; Hardware stack levels required when called:    1
+   358 ;; This function calls:
+   359 ;;		Nothing
+   360 ;; This function is called by:
+   361 ;;		_main
+   362 ;; This function uses a non-reentrant model
+   363 ;;
+   364                           
+   365                           	psect	text2
+   366  000104                     __ptext2:
+   367                           	callstack 0
+   368  000104                     _USART_Init:
+   369                           	callstack 29
+   370  000104                     
+   371                           ;UART_SIMULATION.c: 9:     TRISCbits.TRISC6=0;
+   372  000104  9C94               	bcf	148,6,c	;volatile
+   373                           
+   374                           ;UART_SIMULATION.c: 10:     TRISCbits.TRISC7=1;
+   375  000106  8E94               	bsf	148,7,c	;volatile
+   376  000108                     
+   377                           ;UART_SIMULATION.c: 14:     SPBRG = 32;
+   378  000108  0E20               	movlw	32
+   379  00010A  6EB0               	movwf	176,c	;volatile
+   380                           
+   381                           ;UART_SIMULATION.c: 16:     TXSTA = 0x20;
+   382  00010C  0E20               	movlw	32
+   383  00010E  6EAD               	movwf	173,c	;volatile
+   384                           
+   385                           ;UART_SIMULATION.c: 17:     RCSTA = 0x90;
+   386  000110  0E90               	movlw	144
+   387  000112  6EAC               	movwf	172,c	;volatile
+   388  000114  0012               	return		;funcret
+   389  000116                     __end_of_USART_Init:
+   390                           	callstack 0
+   391                           
+   392 ;; *************** function _ISR *****************
+   393 ;; Defined at:
+   394 ;;		line 31 in file "UART_SIMULATION.c"
+   395 ;; Parameters:    Size  Location     Type
+   396 ;;		None
+   397 ;; Auto vars:     Size  Location     Type
+   398 ;;  a               1    0        unsigned char 
+   399 ;; Return value:  Size  Location     Type
+   400 ;;                  1    wreg      void 
+   401 ;; Registers used:
+   402 ;;		wreg, fsr2l, fsr2h, status,2, status,0
+   403 ;; Tracked objects:
+   404 ;;		On entry : 0/0
+   405 ;;		On exit  : 0/0
+   406 ;;		Unchanged: 0/0
+   407 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14
+   408 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   409 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   410 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   411 ;;      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0
+   412 ;;Total ram usage:        2 bytes
+   413 ;; Hardware stack levels used:    1
+   414 ;; This function calls:
+   415 ;;		Nothing
+   416 ;; This function is called by:
+   417 ;;		Interrupt level 2
+   418 ;; This function uses a non-reentrant model
+   419 ;;
+   420                           
+   421                           	psect	intcode
+   422  000008                     __pintcode:
+   423                           	callstack 0
+   424  000008                     _ISR:
+   425                           	callstack 29
+   426                           
+   427                           ;incstack = 0
+   428  000008  8207               	bsf	int$flags,1,c	;set compiler interrupt flag (level 2)
+   429  00000A  CFD9 F001          	movff	fsr2l,??_ISR
+   430  00000E  CFDA F002          	movff	fsr2h,??_ISR+1
+   431  000012                     
+   432                           ;UART_SIMULATION.c: 33:     char a;;UART_SIMULATION.c: 35:     if(PIR1bits.TXIF==1)
+   433  000012  A89E               	btfss	158,4,c	;volatile
+   434  000014  EF0E  F000         	goto	i2u3_41
+   435  000018  EF10  F000         	goto	i2u3_40
+   436  00001C                     i2u3_41:
+   437  00001C  EF18  F000         	goto	i2l37
+   438  000020                     i2u3_40:
+   439  000020                     
+   440                           ;UART_SIMULATION.c: 36:     {;UART_SIMULATION.c: 37:         TXREG=*str;
+   441  000020  C005  FFD9         	movff	_str,fsr2l
+   442  000024  C006  FFDA         	movff	_str+1,fsr2h
+   443  000028  50DF               	movf	indf2,w,c
+   444  00002A  6EAE               	movwf	174,c	;volatile
+   445  00002C                     
+   446                           ;UART_SIMULATION.c: 38:         str++;
+   447  00002C  4A05               	infsnz	_str^0,f,c
+   448  00002E  2A06               	incf	(_str+1)^0,f,c
+   449  000030                     i2l37:
+   450  000030  C002  FFDA         	movff	??_ISR+1,fsr2h
+   451  000034  C001  FFD9         	movff	??_ISR,fsr2l
+   452  000038  9207               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+   453  00003A  0011               	retfie		f
+   454  00003C                     __end_of_ISR:
+   455                           	callstack 0
+   456  0000                     
+   457                           	psect	rparam
+   458  0000                     
+   459                           	psect	temp
+   460  000007                     btemp:
+   461                           	callstack 0
+   462  000007                     	ds	1
+   463  0000                     int$flags	set	btemp
+   464  0000                     wtemp8	set	btemp+1
+   465  0000                     ttemp5	set	btemp+1
+   466  0000                     ttemp6	set	btemp+4
+   467  0000                     ttemp7	set	btemp+8
+   468                           
+   469                           	psect	config
+   470                           
+   471                           ;Config register CONFIG1L @ 0x1FFF8
+   472                           ;	Watchdog Timer
+   473                           ;	WDTEN = ON, Enabled
+   474                           ;	PLL Prescaler Selection
+   475                           ;	PLLDIV = 1, No prescale (4 MHz oscillator input drives PLL directly)
+   476                           ;	PLL Enable Configuration Bit
+   477                           ;	CFGPLLEN = OFF, PLL Disabled
+   478                           ;	Stack Overflow/Underflow Reset
+   479                           ;	STVREN = ON, Enabled
+   480                           ;	Extended Instruction Set
+   481                           ;	XINST = OFF, Disabled
+   482  1FFF8                     	org	131064
+   483  1FFF8  BF                 	db	191
+   484                           
+   485                           ;Config register CONFIG1H @ 0x1FFF9
+   486                           ;	CPU System Clock Postscaler
+   487                           ;	CPUDIV = OSC1, No CPU system clock divide
+   488                           ;	Code Protect
+   489                           ;	CP0 = OFF, Program memory is not code-protected
+   490  1FFF9                     	org	131065
+   491  1FFF9  F7                 	db	247
+   492                           
+   493                           ;Config register CONFIG2L @ 0x1FFFA
+   494                           ;	Oscillator
+   495                           ;	OSC = ECPLL, EC+PLL (CLKO-RA6), USB-EC+PLL
+   496                           ;	T1OSC/SOSC Power Selection Bits
+   497                           ;	SOSCSEL = HIGH, High Power T1OSC/SOSC circuit selected
+   498                           ;	EC Clock Out Enable Bit
+   499                           ;	CLKOEC = ON, CLKO output enabled on the RA6 pin
+   500                           ;	Fail-Safe Clock Monitor
+   501                           ;	FCMEN = ON, Enabled
+   502                           ;	Internal External Oscillator Switch Over Mode
+   503                           ;	IESO = ON, Enabled
+   504  1FFFA                     	org	131066
+   505  1FFFA  FF                 	db	255
+   506                           
+   507                           ;Config register CONFIG2H @ 0x1FFFB
+   508                           ;	Watchdog Postscaler
+   509                           ;	WDTPS = 32768, 1:32768
+   510  1FFFB                     	org	131067
+   511  1FFFB  FF                 	db	255
+   512                           
+   513                           ;Config register CONFIG3L @ 0x1FFFC
+   514                           ;	DSWDT Clock Select
+   515                           ;	DSWDTOSC = INTOSCREF, DSWDT uses INTRC
+   516                           ;	RTCC Clock Select
+   517                           ;	RTCOSC = T1OSCREF, RTCC uses T1OSC/T1CKI
+   518                           ;	Deep Sleep BOR
+   519                           ;	DSBOREN = ON, Enabled
+   520                           ;	Deep Sleep Watchdog Timer
+   521                           ;	DSWDTEN = ON, Enabled
+   522                           ;	Deep Sleep Watchdog Postscaler
+   523                           ;	DSWDTPS = G2, 1:2,147,483,648 (25.7 days)
+   524  1FFFC                     	org	131068
+   525  1FFFC  FF                 	db	255
+   526                           
+   527                           ;Config register CONFIG3H @ 0x1FFFD
+   528                           ;	IOLOCK One-Way Set Enable bit
+   529                           ;	IOL1WAY = ON, The IOLOCK bit (PPSCON<0>) can be set once
+   530                           ;	ADC 10 or 12 Bit Select
+   531                           ;	ADCSEL = BIT10, 10 - Bit ADC Enabled
+   532                           ;	MSSP address masking
+   533                           ;	MSSP7B_EN = MSK7, 7 Bit address masking mode
+   534  1FFFD                     	org	131069
+   535  1FFFD  FB                 	db	251
+   536                           
+   537                           ;Config register CONFIG4L @ 0x1FFFE
+   538                           ;	Write/Erase Protect Page Start/End Location
+   539                           ;	WPFP = PAGE_127, Write Protect Program Flash Page 127
+   540                           ;	Write/Erase Protect Configuration Region
+   541                           ;	WPCFG = OFF, Configuration Words page not erase/write-protected
+   542  1FFFE                     	org	131070
+   543  1FFFE  FF                 	db	255
+   544                           
+   545                           ;Config register CONFIG4H @ 0x1FFFF
+   546                           ;	Write Protect Disable bit
+   547                           ;	WPDIS = OFF, WPFP<6:0>/WPEND region ignored
+   548                           ;	Write/Erase Protect Region Select bit (valid when WPDIS = 0)
+   549                           ;	WPEND = PAGE_WPFP, Pages WPFP<6:0> through Configuration Words erase/write protected
+   550                           ;	Low Speed USB mode with 48 MHz system clock bit
+   551                           ;	LS48MHZ = SYS48X8, System clock at 48 MHz USB CLKEN divide-by is set to 8
+   552  1FFFF                     	org	131071
+   553  1FFFF  FB                 	db	251
+   554                           tosu	equ	0xFFF
+   555                           tosh	equ	0xFFE
+   556                           tosl	equ	0xFFD
+   557                           stkptr	equ	0xFFC
+   558                           pclatu	equ	0xFFB
+   559                           pclath	equ	0xFFA
+   560                           pcl	equ	0xFF9
+   561                           tblptru	equ	0xFF8
+   562                           tblptrh	equ	0xFF7
+   563                           tblptrl	equ	0xFF6
+   564                           tablat	equ	0xFF5
+   565                           prodh	equ	0xFF4
+   566                           prodl	equ	0xFF3
+   567                           indf0	equ	0xFEF
+   568                           postinc0	equ	0xFEE
+   569                           postdec0	equ	0xFED
+   570                           preinc0	equ	0xFEC
+   571                           plusw0	equ	0xFEB
+   572                           fsr0h	equ	0xFEA
+   573                           fsr0l	equ	0xFE9
+   574                           wreg	equ	0xFE8
+   575                           indf1	equ	0xFE7
+   576                           postinc1	equ	0xFE6
+   577                           postdec1	equ	0xFE5
+   578                           preinc1	equ	0xFE4
+   579                           plusw1	equ	0xFE3
+   580                           fsr1h	equ	0xFE2
+   581                           fsr1l	equ	0xFE1
+   582                           bsr	equ	0xFE0
+   583                           indf2	equ	0xFDF
+   584                           postinc2	equ	0xFDE
+   585                           postdec2	equ	0xFDD
+   586                           preinc2	equ	0xFDC
+   587                           plusw2	equ	0xFDB
+   588                           fsr2h	equ	0xFDA
+   589                           fsr2l	equ	0xFD9
+   590                           status	equ	0xFD8
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         2
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           94      4       6
+    BANK0           160    102     102
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+    BANK8           256      0       0
+    BANK9           256      0       0
+    BANK10          256      0       0
+    BANK11          256      0       0
+    BANK12          256      0       0
+    BANK13          256      0       0
+    BANK14          176      0       0
+
+Pointer List with Targets:
+
+    str	PTR unsigned char  size(2) Largest target is 0
+		 -> NULL(NULL[0]), 
+
+
+Critical Paths under _main in COMRAM
+
+    _main->_tx_char
+
+Critical Paths under _ISR in COMRAM
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _ISR in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _ISR in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _ISR in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _ISR in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _ISR in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _ISR in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _ISR in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Critical Paths under _ISR in BANK7
+
+    None.
+
+Critical Paths under _main in BANK8
+
+    None.
+
+Critical Paths under _ISR in BANK8
+
+    None.
+
+Critical Paths under _main in BANK9
+
+    None.
+
+Critical Paths under _ISR in BANK9
+
+    None.
+
+Critical Paths under _main in BANK10
+
+    None.
+
+Critical Paths under _ISR in BANK10
+
+    None.
+
+Critical Paths under _main in BANK11
+
+    None.
+
+Critical Paths under _ISR in BANK11
+
+    None.
+
+Critical Paths under _main in BANK12
+
+    None.
+
+Critical Paths under _ISR in BANK12
+
+    None.
+
+Critical Paths under _main in BANK13
+
+    None.
+
+Critical Paths under _ISR in BANK13
+
+    None.
+
+Critical Paths under _main in BANK14
+
+    None.
+
+Critical Paths under _ISR in BANK14
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                               104   104      0     252
+                                              3 COMRAM     1     1      0
+                                              0 BANK0    102   102      0
+                         _USART_Init
+                            _tx_char
+ ---------------------------------------------------------------------------------
+ (1) _tx_char                                              1     1      0      22
+                                              2 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ (1) _USART_Init                                           0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (2) _ISR                                                  3     3      0       0
+                                              0 COMRAM     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _USART_Init
+   _tx_char
+
+ _ISR (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             EAF      0       0      35        0.0%
+BITBANK13          100      0       0      31        0.0%
+BANK13             100      0       0      32        0.0%
+BITBANK12          100      0       0      29        0.0%
+BANK12             100      0       0      30        0.0%
+BITBANK11          100      0       0      27        0.0%
+BANK11             100      0       0      28        0.0%
+BITBANK10          100      0       0      25        0.0%
+BANK10             100      0       0      26        0.0%
+BITBANK9           100      0       0      23        0.0%
+BANK9              100      0       0      24        0.0%
+BITBANK8           100      0       0      21        0.0%
+BANK8              100      0       0      22        0.0%
+BITBANK7           100      0       0      19        0.0%
+BANK7              100      0       0      20        0.0%
+BITBANK6           100      0       0      17        0.0%
+BANK6              100      0       0      18        0.0%
+BITBANK5           100      0       0      15        0.0%
+BANK5              100      0       0      16        0.0%
+BITBANK4           100      0       0      13        0.0%
+BANK4              100      0       0      14        0.0%
+BITBANK3           100      0       0      11        0.0%
+BANK3              100      0       0      12        0.0%
+BITBANK2           100      0       0       9        0.0%
+BANK2              100      0       0      10        0.0%
+BITBANK1           100      0       0       7        0.0%
+BANK1              100      0       0       8        0.0%
+BITBANK14           B0      0       0      33        0.0%
+BANK14              B0      0       0      34        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0     66      66       5       63.7%
+BITCOMRAM           5E      0       0       0        0.0%
+COMRAM              5E      4       6       1        6.4%
+BITSFR_2             0      0       0     200        0.0%
+SFR_2                0      0       0     200        0.0%
+BITSFR_1             0      0       0     200        0.0%
+SFR_1                0      0       0     200        0.0%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      6C       6        0.0%
+DATA                 0      0      6C       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.31 build 20201012212115 
+Symbol Table                                                                                   Fri Jan 29 23:39:08 2021
+
+                     l23 0114                       l46 00F4                       l56 0056  
+                     l49 0102                       u80 0102                       u81 00FE  
+                     u90 0064                       u91 0060                      l801 004C  
+                    l803 0064                      l805 0094                      l815 00B8  
+                    l807 00A8                      l817 00CA                      l809 00B0  
+                    l819 00D0                      l791 0104                      l793 0108  
+                    l795 00F0                      l797 0040                      l799 0048  
+                    u100 0094                      u101 0090                      u110 00E6  
+                    u111 00E2                      _ISR 0008                      _str 0005  
+                   ?_ISR 0001                     i2l37 0030              main@rc_data 0060  
+                   _main 0040                     fsr2h 000FDA                     indf2 000FDF  
+                   fsr2l 000FD9                     btemp 0007                     start 003C  
+           ___param_bank 000000                    ??_ISR 0001                    ?_main 0001  
+                  i2l755 0012                    i2l757 0020                    i2l759 002C  
+                  _RCREG 000FAF                    _RCSTA 000FAC                    _SPBRG 000FB0  
+                  _TXREG 000FAE                    _TXSTA 000FAD                    main@i 00C4  
+                  ttemp5 0008                    ttemp6 000B                    ttemp7 000F  
+        __end_of_tx_char 0104                    status 000FD8                    wtemp8 0008  
+            ?_USART_Init 0001          __initialization 0116             __end_of_main 00EE  
+                 ??_main 0004            __activetblptr 000000                   i2u3_40 0020  
+                 i2u3_41 001C      __size_of_USART_Init 0012                ??_tx_char 0003  
+             __accesstop 0060  __end_of__initialization 011A            ___rparam_used 000001  
+         __pcstackCOMRAM 0001             ??_USART_Init 0003                  __Hparam 0000  
+                __Lparam 0000                  __pcinit 0116                  __ramtop 0F00  
+                __ptext0 0040                  __ptext1 00EE                  __ptext2 0104  
+           __size_of_ISR 0034       __end_of_USART_Init 0116                  _tx_char 00EE  
+   end_of_initialization 011A                  postinc2 000FDE                _TRISCbits 000F94  
+              _TXSTAbits 000FAD      start_initialization 0116              __end_of_ISR 003C  
+            __pbssCOMRAM 0005            __pcstackBANK0 0060                __pintcode 0008  
+               ?_tx_char 0001                 _PIE1bits 000F9D                 _PIR1bits 000F9E  
+               __Hrparam 0000                 __Lrparam 0000         __size_of_tx_char 0016  
+          __size_of_main 00AE                 int$flags 0007               _INTCONbits 000FF2  
+               intlevel2 0000                 tx_char@a 0003               _USART_Init 0104  

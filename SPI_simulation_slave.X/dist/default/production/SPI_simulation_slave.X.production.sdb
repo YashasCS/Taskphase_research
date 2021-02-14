@@ -1,0 +1,143 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F47J53 ]
+[d frameptr 4065 ]
+"4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"15 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\Umul64.c
+[v ___omul __omul `(uo  1 e 8 0 ]
+"14 C:\Users\HP\MPLABXProjects\SPI_simulation_slave.X\SPI_slave.c
+[v _main main `(v  1 e 1 0 ]
+"29
+[v _SPI_Init_Slave SPI_Init_Slave `(v  1 e 1 0 ]
+"60
+[v _SPI_Read SPI_Read `(uc  1 e 1 0 ]
+"10716 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC18F-J_DFP/1.3.35/xc8\pic\include\proc\pic18f47j53.h
+[v _LATD LATD `VEuc  1 e 1 @3980 ]
+[s S97 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+`uc 1 TRISA6 1 0 :1:6 
+`uc 1 TRISA7 1 0 :1:7 
+]
+"11141
+[u S106 . 1 `S97 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES106  1 e 1 @3986 ]
+[s S76 . 1 `uc 1 TRISB0 1 0 :1:0 
+`uc 1 TRISB1 1 0 :1:1 
+`uc 1 TRISB2 1 0 :1:2 
+`uc 1 TRISB3 1 0 :1:3 
+`uc 1 TRISB4 1 0 :1:4 
+`uc 1 TRISB5 1 0 :1:5 
+`uc 1 TRISB6 1 0 :1:6 
+`uc 1 TRISB7 1 0 :1:7 
+]
+"11198
+[u S85 . 1 `S76 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES85  1 e 1 @3987 ]
+[s S118 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 . 1 0 :3:3 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"11258
+[u S125 . 1 `S118 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES125  1 e 1 @3988 ]
+"11288
+[v _TRISD TRISD `VEuc  1 e 1 @3989 ]
+[s S138 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSP1IF 1 0 :1:3 
+`uc 1 TX1IF 1 0 :1:4 
+`uc 1 RC1IF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PMPIF 1 0 :1:7 
+]
+"12043
+[s S147 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+]
+[s S152 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 PSPIF 1 0 :1:7 
+]
+[u S155 . 1 `S138 1 . 1 0 `S147 1 . 1 0 `S152 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES155  1 e 1 @3998 ]
+"15198
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
+"15295
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
+"15845
+[v _SSPCON1 SSPCON1 `VEuc  1 e 1 @4038 ]
+"16083
+[v _SSPSTAT SSPSTAT `VEuc  1 e 1 @4039 ]
+"16981
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @4041 ]
+"18060
+[v _OSCCON OSCCON `VEuc  1 e 1 @4051 ]
+[s S26 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 NOT_RBPU 1 0 :1:7 
+]
+"18894
+[s S29 . 1 `uc 1 RBIP 1 0 :1:0 
+`uc 1 INT3IP 1 0 :1:1 
+`uc 1 TMR0IP 1 0 :1:2 
+`uc 1 INTEDG3 1 0 :1:3 
+`uc 1 INTEDG2 1 0 :1:4 
+`uc 1 INTEDG1 1 0 :1:5 
+`uc 1 INTEDG0 1 0 :1:6 
+`uc 1 nRBPU 1 0 :1:7 
+]
+[s S38 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT3P 1 0 :1:1 
+`uc 1 T0IP 1 0 :1:2 
+`uc 1 . 1 0 :4:3 
+`uc 1 RBPU 1 0 :1:7 
+]
+[u S44 . 1 `S26 1 . 1 0 `S29 1 . 1 0 `S38 1 . 1 0 ]
+[v _INTCON2bits INTCON2bits `VES44  1 e 1 @4081 ]
+"21400
+[v _LATA5 LATA5 `VEb  1 e 0 @31821 ]
+"14 C:\Users\HP\MPLABXProjects\SPI_simulation_slave.X\SPI_slave.c
+[v _main main `(v  1 e 1 0 ]
+{
+"27
+} 0
+"60
+[v _SPI_Read SPI_Read `(uc  1 e 1 0 ]
+{
+"66
+} 0
+"29
+[v _SPI_Init_Slave SPI_Init_Slave `(v  1 e 1 0 ]
+{
+"48
+} 0
